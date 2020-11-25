@@ -24,7 +24,6 @@ const obtenerChat = async(req, res) => {
 
 
 
-
 module.exports = {
     obtenerChat
 }
