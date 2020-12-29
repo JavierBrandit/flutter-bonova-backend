@@ -17,7 +17,6 @@ const CursoSchema = Schema({
     },
     videos: {
         type: Object,
-        ref: Video,
         required: true
     },
 

@@ -6,7 +6,7 @@ const obtenerCursos = async (req, res = response ) => {
 
     
     const desde = Number( req.query.desde ) || 0; 
-    
+
     const cursos = await Curso
         .find({ _id: { $ne: req.uid } }) //excluirme como usuario
         //.sort('-online') //ordenar por online descendentemente
@@ -18,6 +18,24 @@ const obtenerCursos = async (req, res = response ) => {
         ok:true,
         cursos
 
+    })
+}
+
+
+const getMatematica = async (req, res = response ) => {
+    
+    const ramo = req.params.ramo;
+    const nivel = req.params.nivel;
+
+    const cursos = await Curso.find({
+        $or: [{ ramo: ramo, nivel: nivel }]
+    })
+    .sort({ createdAt: 'desc'})
+    .limit(30);
+
+    res.json({
+        ok: true,
+        cursos
     })
 }
 
@@ -38,5 +56,6 @@ const postearCursos = async (req, res = response ) => {
 
 module.exports = {
     obtenerCursos,
-    postearCursos
+    postearCursos,
+    getMatematica
 }
