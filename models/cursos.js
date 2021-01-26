@@ -15,6 +15,24 @@ const CursoSchema = Schema({
         type: String,
         required: true
     },
+    rate: {
+        type: Number,
+    },
+    progress: {
+        type: Number,
+    },
+    capitulo: {
+        type: Number,
+    },
+    portada: {
+        type: String,
+    },
+    profesor: {
+        type: String,
+    },
+    guardado: {
+        type: Boolean,
+    },
     videos: {
         type: Object,
         required: true

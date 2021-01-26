@@ -16,9 +16,11 @@ const VideoSchema = Schema({
     curso: {
         type: String,
     },
-    size: {
+    numMod: {
         type: Number,
-        required: true
+    },
+    tituloMod: {
+        type: String,
     },
 
 }, {

@@ -15,7 +15,7 @@ const obtenerVideos = async (req, res = response ) => {
     
     const videos = await Video
         .find({ _id: { $ne: req.uid } }) //excluirme como usuario
-        .sort('-online') //ordenar por online descendentemente
+        .sort('numMod') //ordenar por numMod descendentemente
         .skip(desde)
         .limit(30)
     
