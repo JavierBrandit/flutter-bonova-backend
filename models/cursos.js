@@ -32,7 +32,7 @@ const CursoSchema = Schema({
         default: false
     },
     videos: [{
-        type: Schema.Types.ObjectId,
+        type: Object,
         ref: 'Video',
     },],
     descripcion: {
