@@ -18,10 +18,7 @@ const CursoSchema = Schema({
     rate: {
         type: Number,
     },
-    progress: {
-        type: Number,
-    },
-    capitulo: {
+    progreso: {
         type: Number,
     },
     portada: {
@@ -32,10 +29,33 @@ const CursoSchema = Schema({
     },
     guardado: {
         type: Boolean,
+        default: false
     },
-    videos: {
-        type: Object,
-        required: true
+    videos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Video',
+    },],
+    descripcion: {
+        type: String,
+    },
+    thumbnail: {
+        type: String,
+    },
+    views: {
+        type: Number,
+    },
+    likes: {
+        type: Number,
+    },
+    compartido: {
+        type: Number,
+    },
+    comentario: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Mensaje'
+    }],
+    precio: {
+        type: String,
     },
 
 }, {
@@ -48,5 +68,3 @@ CursoSchema.method('toJSON', function() {
 });
 
 module.exports = model('Curso', CursoSchema);
-
-

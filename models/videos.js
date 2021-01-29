@@ -13,16 +13,30 @@ const VideoSchema = Schema({
         type: String,
         required: true
     },
-    curso: {
-        type: String,
-    },
-    numMod: {
-        type: Number,
-    },
     tituloMod: {
         type: String,
     },
+    views: {
+        type: Number,
+    },
+    likes: {
+        type: Number,
+    },
+    compartido: {
+        type: Number,
+    },
+    comentario: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Mensaje'
+    }],
+    adjunto: {
+        type: String,
+    },
+    apunte: [{
+        type: String,
+    }],
 
+    
 }, {
     timestamps: true
 });

@@ -10,7 +10,6 @@ const MensajeSchema = Schema({
     para: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
-        required: true
     },
     mensaje: {
         type: String,
