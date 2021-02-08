@@ -39,18 +39,63 @@ const getMatematica = async (req, res = response ) => {
     })
 }
 
+function crearCurso(req) {
+    const {
+        titulo,
+         ramo,
+         nivel,
+         rate,
+         progreso,
+         portada,
+         profesor,
+         guardado,
+         videos,
+         descripcion,
+         thumbnail,
+         views,
+         likes,
+         compartido,
+         comentario,
+         precio,
+    } = req.body;
+  
+    return new Curso({  
+        titulo: titulo,
+        ramo: ramo,
+        nivel: nivel,
+        rate: rate,
+        progreso: progreso,
+        portada: portada,
+        profesor: profesor,
+        guardado: guardado,
+        videos: videos,
+        descripcion: descripcion,
+        thumbnail: thumbnail,
+        views: views,
+        likes: likes,
+        compartido: compartido,
+        comentario: comentario,
+        precio: precio,
+    });
+  }
+
 const postearCursos = async (req, res = response ) => {
 
-    
-    const curso = new Curso( req.body );
+    // const curso = new Curso( req.body );    
+    const curso = crearCurso(req);
 
-    await curso.save();
-
-    
+    await curso.save()
+   
+    //   .then((result) => {
+    //     res.status(200).json(result);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     res.status(503).json(err);
+    //   });
     
     res.json({
         curso
-
     })
 }
 

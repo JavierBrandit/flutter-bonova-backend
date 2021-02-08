@@ -85,6 +85,58 @@ const login = async ( req, res = response ) => {
     
 }
 
+
+const editar = async ( req, res = response ) => {
+
+    let id = req.params.id;
+    let body = _.pick(req.body, ['nombre', 'password', 'profesor', 'celular',
+                                 'comuna', 'colegio', 'curso', 'contactos',
+                                 'foto', 'descripcion', 'recordatorio',
+                                ]);    
+    
+    User.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (err, userBD) => {
+        if(err){
+            return res.status(400).json({
+               ok: false,
+               err  
+            });
+        }
+
+        res.json({
+            ok: true,
+            usuario: userBD
+        })
+    });
+}
+
+const eliminar = async ( req, res = response ) => {
+
+    let id = req.params.id;
+    User.findByIdAndUpdate(id, {status: false}, {new: true}, (err, userBD) => {
+        if(err){
+            return res.status(400).json({
+               ok: false,
+               err  
+            });
+        }
+
+        if(!userBD){
+            return res.status(400).json({
+                ok: false,
+                err:{
+                    message: 'Usuario no encontrado'
+                } 
+             });
+        }
+
+        res.json({
+            ok: true,
+            userBD
+        });
+    });
+}
+
+
 const renewToken = async ( req, res = response ) => {
    
     const uid = req.uid;
@@ -105,5 +157,7 @@ const renewToken = async ( req, res = response ) => {
 module.exports = {
     crearUsuario,
     login,
+    editar,
+    eliminar,
     renewToken
 }
