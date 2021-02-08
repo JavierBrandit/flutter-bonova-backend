@@ -88,7 +88,7 @@ const login = async ( req, res = response ) => {
 
 const editar = async ( req, res = response ) => {
 
-    let id = req.params.id;
+    let id = req.params.uid;
     let body = _.pick(req.body, ['nombre', 'password', 'profesor', 'celular',
                                  'comuna', 'colegio', 'curso', 'contactos',
                                  'foto', 'descripcion', 'recordatorio',
@@ -111,7 +111,7 @@ const editar = async ( req, res = response ) => {
 
 const eliminar = async ( req, res = response ) => {
 
-    let id = req.params.id;
+    let id = req.params.uid;
     User.findByIdAndUpdate(id, {status: false}, {new: true}, (err, userBD) => {
         if(err){
             return res.status(400).json({
