@@ -88,13 +88,10 @@ const login = async ( req, res = response ) => {
 
 const editar = async ( req, res = response ) => {
 
-    let id = req.params.uid;
-    let body = _.pick(req.body, ['nombre', 'password', 'profesor', 'celular',
-                                 'comuna', 'colegio', 'curso', 'contactos',
-                                 'foto', 'descripcion', 'recordatorio',
-                                ]);    
+    let id = req.params.id;
+    let body = req.body 
     
-    User.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (err, userBD) => {
+    Usuario.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (err, userBD) => {
         if(err){
             return res.status(400).json({
                ok: false,
