@@ -15,6 +15,6 @@ router.get('/:ramo/:nivel', validarJWT, getMatematica );
 router.post('/post', validarJWT, postearCursos );
 router.put('/:id', validarJWT, editar ), 
 
-router.get('/historial/:cid', validarJWT, obtenerHistorial );
+router.get('/historial/', validarJWT, obtenerHistorial );
 
 module.exports = router;
