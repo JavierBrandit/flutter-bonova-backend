@@ -20,9 +20,15 @@ io.on('connection', client => {
 
     // Escuchar del cliente el mensaje-personal
     client.on('mensaje-personal', (payload) => {
-       //TODO: Grabar msj
        grabarMensaje( payload );
        io.to( payload.para ).emit('mensaje-personal', payload);
+    });
+
+    // Escuchar del cliente el historial
+    client.on('historial', (payload) => {
+       //TODO: Grabar msj
+       grabarHistorial( payload );
+       io.to( payload ).emit('historial', payload);
     });
     
     client.on('disconnect', () => {

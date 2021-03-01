@@ -46,6 +46,21 @@ const UsuarioSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
     },],
+    historial: [{
+
+        curso: {
+            type: Schema.Types.ObjectId,
+            ref: 'Curso',
+         },
+         progreso: {
+             type: Number,
+         },
+    }
+    ],
+    guardados: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Curso',
+    },],
     foto: {
         type: String,
     },

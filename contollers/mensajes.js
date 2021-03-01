@@ -1,5 +1,6 @@
 
 const Mensaje = require('../models/mensaje');
+const Historial = require('../models/historial');
 
 
 
@@ -20,10 +21,28 @@ const obtenerChat = async(req, res) => {
     })
 }
 
+const obtenerHistorial = async(req, res) => {
+    
+    const miId = req.uid;
+    const cid = req.params.cid;
+
+    const last30 = await Histotial.find({
+        $or: [{ curso: cid, usuario: miId }]
+    })
+    .sort({ createdAt: 'desc'})
+    .limit(30);
+
+    res.json({
+        ok: true,
+        historial: last30
+    })
+}
+
 
 
 
 
 module.exports = {
-    obtenerChat
+    obtenerChat,
+    obtenerHistorial
 }

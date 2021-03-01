@@ -21,6 +21,26 @@ const obtenerCursos = async (req, res = response ) => {
     })
 }
 
+const editar = async ( req, res = response ) => {
+
+    let id = req.params._id;
+    let body = req.body 
+    
+    Curso.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (err, userBD) => {
+        if(err){
+            return res.status(400).json({
+               ok: false,
+               err  
+            });
+        }
+
+        res.json({
+            ok: true,
+            usuario: userBD
+        })
+    });
+}
+
 
 const getMatematica = async (req, res = response ) => {
     
@@ -38,6 +58,8 @@ const getMatematica = async (req, res = response ) => {
         cursos
     })
 }
+
+
 
 function crearCurso(req) {
     const {
@@ -100,6 +122,7 @@ const postearCursos = async (req, res = response ) => {
 }
 
 module.exports = {
+    editar,
     obtenerCursos,
     postearCursos,
     getMatematica

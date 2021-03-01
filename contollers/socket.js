@@ -1,5 +1,6 @@
 const Usuario = require('../models/usuario');
 const Mensaje = require('../models/mensaje');
+const Historial = require('../models/historial');
 
 const usuarioConectado = async ( uid = '' ) => {
 
@@ -30,8 +31,28 @@ const grabarMensaje = async ( payload ) => {
         }
     */    
     try {
-       const mensaje = new Mensaje( payload );
-       await mensaje.save();
+        const mensaje = new Mensaje( payload );
+        await mensaje.save();
+        
+        return true;
+    } catch (error) {
+        return false; 
+    }
+}
+
+const grabarHistorial = async ( payload ) => {
+    
+    /*
+    {
+        curso: '',
+        progreso: 0.2,
+        
+    }
+    */    
+   try {
+    //    const uid = req.uid;
+       const historial = new Historial( payload );
+       await historial.save();
        
        return true;
     } catch (error) {
@@ -45,5 +66,6 @@ const grabarMensaje = async ( payload ) => {
 module.exports = {
     usuarioConectado,
     usuarioDesconectado,
-    grabarMensaje
+    grabarMensaje,
+    grabarHistorial
 }
