@@ -31,6 +31,7 @@ app.use( '/api/usuarios', require('./routes/usuarios') );
 app.use( '/api/mensajes', require('./routes/mensajes') );
 app.use( '/api/video',    require('./routes/videos') );
 app.use( '/api/curso',    require('./routes/cursos') );
+app.use( '/api/search',    require('./routes/search') );
 
 
 

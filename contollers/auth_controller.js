@@ -4,6 +4,7 @@ const Usuario = require('../models/usuario');
 const Curso = require('../models/cursos');
 const Historial = require('../models/historial');
 const { generarJWT } = require('../helpers/jwt');
+const cursos = require('../models/cursos');
 
 const crearUsuario = async (req, res = response ) => {
 
@@ -347,6 +348,55 @@ const renewToken = async ( req, res = response ) => {
     });
 }
 
+// const searchCursos = async ( req, res = response ) => {
+
+//     const uid = req.uid;
+//     let query = req.params.query;
+
+//     const cursos = await Curso.find({ titulo: query });
+
+//     // const respuesta = cursos.getFilter();
+
+//     res.json({
+//         cursos,
+//         query
+//     });
+// }
+const searchCursos = async ( req, res = response ) => {
+
+    // const uid = req.uid;
+    let query = req.query.t;
+    let cursos;
+
+   
+    cursos = await Curso.find({
+        $text: {
+            $search: query
+        }},
+        {
+            score: { $meta: 'textScore' }
+        }
+    ).sort({
+        score: { $meta: 'textScore'}
+    });
+    
+
+    // const cursos = await Curso.find({ titulo: query });
+
+    // const respuesta = cursos.getFilter();
+
+    res.json({
+        cursos,
+        query
+    });
+
+    // function(req, res, next) {
+    //     Product.find({ $text: { $search: req.param('title') } } , function(err, docs){
+    //        res.render('shop/search', {products: docs} );
+    //     });
+    //   }
+}
+
 module.exports = {
     crearUsuario,
     login,
@@ -357,5 +407,6 @@ module.exports = {
     verGuardados,
     eliminarGuardado,
     agregarHistorial,
-    // borrarHistorial
+    // borrarHistorial,
+    searchCursos
 }
