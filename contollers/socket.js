@@ -1,4 +1,5 @@
 const Usuario = require('../models/usuario');
+const Curso = require('../models/cursos');
 const Mensaje = require('../models/mensaje');
 const Historial = require('../models/historial');
 
@@ -21,13 +22,11 @@ const usuarioDesconectado = async ( uid = '' ) => {
 }
 
 const grabarMensaje = async ( payload ) => {
-
     /*
         {
             de: '',
             para: '',
             texto: ''
-
         }
     */    
     try {
@@ -41,12 +40,10 @@ const grabarMensaje = async ( payload ) => {
 }
 
 const grabarHistorial = async ( payload ) => {
-    
     /*
     {
         curso: '',
         progreso: 0.2,
-        
     }
     */    
    try {
@@ -60,6 +57,24 @@ const grabarHistorial = async ( payload ) => {
     }
 }
 
+const guardarCursoSocket = async ( uid = '', payload ) => {
+    /*
+        {
+            curso: '',
+            progeso: 0,1,
+        }
+    */ 
+    const usuario = await Usuario.findById( uid );
+    const curso   = await Curso.findById( payload.curso );
+
+    await usuario.guardados.push(
+        curso 
+    );
+
+    // await usuario.save();
+    return usuario;
+}
+
 
 
 
@@ -67,5 +82,6 @@ module.exports = {
     usuarioConectado,
     usuarioDesconectado,
     grabarMensaje,
-    grabarHistorial
+    grabarHistorial,
+    guardarCursoSocket
 }
