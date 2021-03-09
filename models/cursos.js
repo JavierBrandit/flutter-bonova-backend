@@ -28,10 +28,10 @@ const CursoSchema = Schema({
     profesor: {
         type: String,
     },
-    guardado: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario'
-    }],
+    // guardado: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Usuario'
+    // }],
     videos: [{
         type: Object,
         ref: 'Video',
