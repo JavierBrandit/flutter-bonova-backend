@@ -391,7 +391,7 @@ module.exports = {
     guardarCurso,
     verGuardados,
     eliminarGuardado,
-    agregarHistorial,
+    // agregarHistorial,
     // borrarHistorial,
     searchCursos
 }
