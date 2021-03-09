@@ -88,7 +88,6 @@ const login = async ( req, res = response ) => {
     
 }
 
-
 const editar = async ( req, res = response ) => {
 
     let id = req.params.uid;
@@ -211,45 +210,45 @@ const eliminar = async ( req, res = response ) => {
 }
 
 // HISTORIAL
-const agregarHistorial = async ( req, res = response, next ) => {
+// const agregarHistorial = async ( req, res = response, next ) => {
 
-    let uid = req.uid;
-    let cid = req.params.cid;
-    let currentUser;
+//     let uid = req.uid;
+//     let cid = req.params.cid;
+//     let currentUser;
 
-    Usuario.findById(uid)
-    .populate('historial')
-    .then((user) => {
-      currentUser = user;
-      return Curso.findById(cid);
-    })
-    .then((movie) => {
-      let isExist = false;
-      currentUser.historial.map((item) => {
-        // if (item.curso.cid.toString() === cid.toString()) {
-        //   isExist = true;
-        // }
-      });
-      if (!isExist) {
-        currentUser.historial.push({
-            curso: movie,
-            progreso: 0.0,
-            // fecha: Date
-        });
-      }
-      return currentUser.save();
-    })
-    .then((result) => {
-      res.status(200).json(result.historial);
-    })
-    .catch((err) => {
-      console.log(err);
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
-    });
-}
+//     Usuario.findById(uid)
+//     .populate('historial')
+//     .then((user) => {
+//       currentUser = user;
+//       return Curso.findById(cid);
+//     })
+//     .then((movie) => {
+//       let isExist = false;
+//       currentUser.historial.map((item) => {
+//         // if (item.curso.cid.toString() === cid.toString()) {
+//         //   isExist = true;
+//         // }
+//       });
+//       if (!isExist) {
+//         currentUser.historial.push({
+//             curso: movie,
+//             progreso: 0.0,
+//             // fecha: Date
+//         });
+//       }
+//       return currentUser.save();
+//     })
+//     .then((result) => {
+//       res.status(200).json(result.historial);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       if (!err.statusCode) {
+//         err.statusCode = 500;
+//       }
+//       next(err);
+//     });
+// }
 // const agregarHistorial = async ( req, res = response, next ) => {
 
 //     let uid = req.uid;
@@ -348,20 +347,6 @@ const renewToken = async ( req, res = response ) => {
     });
 }
 
-// const searchCursos = async ( req, res = response ) => {
-
-//     const uid = req.uid;
-//     let query = req.params.query;
-
-//     const cursos = await Curso.find({ titulo: query });
-
-//     // const respuesta = cursos.getFilter();
-
-//     res.json({
-//         cursos,
-//         query
-//     });
-// }
 const searchCursos = async ( req, res = response ) => {
 
     // const uid = req.uid;

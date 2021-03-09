@@ -15,7 +15,7 @@ const HistorialSchema = Schema({
        required: true
     },
     progreso: {
-        type: Number,
+       type: Number,
     },
     // fecha: {
     //     type: Date,

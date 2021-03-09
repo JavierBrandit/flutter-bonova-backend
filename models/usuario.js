@@ -48,13 +48,13 @@ const UsuarioSchema = Schema({
     },],
     historial: [{
 
-        curso: {
-            type: Schema.Types.ObjectId,
-            ref: 'Curso',
-         },
-         progreso: {
-             type: Number,
-         },
+        // curso: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Curso',
+        //  },
+        //  progreso: {
+        //      type: Number,
+        //  },
     }
     ],
     guardados: [{

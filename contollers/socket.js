@@ -57,22 +57,29 @@ const grabarHistorial = async ( payload ) => {
     }
 }
 
-const guardarCursoSocket = async ( uid = '', payload ) => {
+const guardarCursoSocket = async ( payload ) => {
     /*
         {
             curso: '',
             progeso: 0,1,
         }
     */ 
-    const usuario = await Usuario.findById( uid );
-    const curso   = await Curso.findById( payload.curso );
+    // const usuario = await Usuario.findById( uid );
+    // const historial = new Historial( payload );
+    // const curso   = await Curso.findById( payload.curso );
 
-    await usuario.guardados.push(
-        curso 
-    );
+    // await usuario.push(
+    //     curso 
+    // );
 
-    // await usuario.save();
-    return usuario;
+    try {
+           const historial = new Historial( payload );
+           await historial.save();
+           
+           return true;
+        } catch (error) {
+           return false; 
+        }
 }
 
 
