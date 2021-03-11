@@ -29,7 +29,6 @@ const HistorialSchema = Schema({
 
 HistorialSchema.method('toJSON', function() {
     const { __v, _id, ...object } = this.toObject();
-    object.hid = _id;
     return object;
 });
 

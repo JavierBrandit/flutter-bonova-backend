@@ -6,6 +6,10 @@ const UsuarioSchema = Schema({
        type: String,
        required: true
     },
+    apellido: {
+       type: String,
+       required: true
+    },
     email: {
         type: String,
         required: true,
@@ -47,6 +51,8 @@ const UsuarioSchema = Schema({
         ref: 'Usuario',
     },],
     historial: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Historial',
 
         // curso: {
         //     type: Schema.Types.ObjectId,

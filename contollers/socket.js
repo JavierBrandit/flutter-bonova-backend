@@ -71,21 +71,23 @@ const guardarCursoSocket = async ( payload ) => {
     // await usuario.push(
     //     curso 
     // );
+    // const existe = await Historial.findOneAndUpdate({curso: payload.curso})
+    const existe = await Historial.find({
+        $or: [{ curso: payload.curso }]
+    })
+    
     try {
-        const existe = await Historial.findOneAndUpdate({curso: payload.curso})
-        
-    } catch (error) {
-        
-        try {
-               const historial = new Historial( payload );
-               await historial.save();
-               
-               return true;
-            } catch (error) {
-               return false; 
-            }
-    }
-
+        if (existe === []) {
+            return true;
+        } else {
+            const historial = new Historial( payload );
+            await historial.save();
+            return true;
+        } 
+           
+        } catch (error) {
+           return false; 
+        }
 }
 
 
