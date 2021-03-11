@@ -76,7 +76,7 @@ const guardarCursoSocket = async ( payload ) => {
         $or: [{ curso: payload.curso, usuario: payload.usuario }]
     });
     
-    try {
+    // try {
         if (existe != []) {
             const historial = new Historial( payload );
             await historial.save();
@@ -85,9 +85,9 @@ const guardarCursoSocket = async ( payload ) => {
             return true;
         } 
            
-        } catch (error) {
-           return false; 
-        }
+        // } catch (error) {
+        //    return false; 
+        // }
 }
 
 
