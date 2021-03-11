@@ -144,6 +144,87 @@ const guardarCurso = async ( req, res = response ) => {
     });
 }
 
+const guardarHistorial = async ( req, res = response ) => {
+
+    let uid = req.uid;
+    let cid = req.params.cid;
+    let payload = req.body;
+    let historial;
+    // let currentUser;
+
+    
+    try {
+
+        const existeHistorial = await Historial.findOne({ curso: cid });
+        // const existeEmail = await Usuario.findOne({ email });
+        if( existeHistorial ) {
+
+            historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
+
+            // return res.status(400).json({
+            //     ok: false,
+            //     msg: 'El correo ya esta registrado'
+            // })
+        } else {
+            historial = new Historial( payload );
+            await historial.save();
+            // await Usuario.findById(uid, push)
+        }
+
+        // const usuario = new Usuario( req.body );
+
+        // Encriptar contraseñas
+        // const salt = bcrypt.genSaltSync();
+        // usuario.password = bcrypt.hashSync( password, salt );
+
+        // await usuario.save();
+
+        // Generar mi JWT
+        // const token = await generarJWT( usuario.id );
+    
+        res.json({
+            historial,
+        });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+    
+    // Usuario.findById(uid)
+    // .populate('guardados')
+    // .then((user) => {
+    //   currentUser = user;
+    //   return Curso.findById(cid);
+    // })
+    // .then((movie) => {
+    //   let isExist = false;
+    //   currentUser.guardados.map((item) => {
+    //     if (item._id.toString() === cid.toString()) {
+    //       isExist = true;
+    //     }
+    //   });
+    //   if (!isExist) {
+    //     currentUser.guardados.push(movie);
+    //   }
+    //   return currentUser.save();
+    // })
+    // .then((result) => {
+    //   res.status(200).json(result.guardados);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    //   if (!err.statusCode) {
+    //     err.statusCode = 500;
+    //   }
+    //   next(err);
+    // });
+}
+
 const verGuardados = async ( req, res = response ) => {
     
     const userId = req.uid;
@@ -391,6 +472,7 @@ module.exports = {
     guardarCurso,
     verGuardados,
     eliminarGuardado,
+    guardarHistorial,
     // agregarHistorial,
     // borrarHistorial,
     searchCursos
