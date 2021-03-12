@@ -32,7 +32,7 @@ io.on('connection', client => {
 
     client.on('editar', (payload) => {
        editar( payload, uid );
-       io.to( payload.usuario ).emit('historial', payload);
+       io.to( payload.usuario ).emit('editar', payload);
     });
 
     client.on('guardar', (payload) => {
