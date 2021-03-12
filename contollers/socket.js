@@ -39,21 +39,50 @@ const grabarMensaje = async ( payload ) => {
     }
 }
 
-const grabarHistorial = async ( payload ) => {
+const grabarHistorial = async ( payload, uid = '' ) => {
     /*
     {
         curso: '',
         progreso: 0.2,
     }
     */    
-   try {
-    //    const uid = req.uid;
-       const historial = new Historial( payload );
-       await historial.save();
+//    try {
+//     //    const uid = req.uid;
+//        const historial = new Historial( payload );
+//        await historial.save();
        
-       return true;
+//        return true;
+//     } catch (error) {
+//        return false; 
+//     }
+    let cid = payload.curso;
+    // let payload = req.body;
+    // let historial;
+    // let currentUser;
+
+    
+    try {
+
+        const existeHistorial = await Historial.findOne({ curso: cid });
+        // const existeEmail = await Usuario.findOne({ email });
+        if( existeHistorial ) {
+
+            historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
+
+        } else {
+            historial = new Historial( payload );
+            await historial.save();        }
+    
+        // res.json({
+        //     historial,
+        // });
+        
     } catch (error) {
-       return false; 
+        console.log(error);
+        // res.status(500).json({
+        //     ok: false,
+        //     msg: 'Hable con el administrador'
+        // });
     }
 }
 
@@ -75,16 +104,16 @@ const guardarCursoSocket = async ( payload ) => {
     // const existe = await Historial.find({
     //     $or: [{ curso: payload.curso, usuario: payload.usuario }]
     // });
-    try {
-        const existe = await Historial.findOneAndUpdate({
-            $or: [{ curso: payload.curso, usuario: payload.usuario }]
-        }, payload);
+    // try {
+    //     const existe = await Historial.findOneAndUpdate({
+    //         $or: [{ curso: payload.curso, usuario: payload.usuario }]
+    //     }, payload);
         
-    } catch (error) {
-        const historial = new Historial( payload );
-            await historial.save();
-            return true;
-    }
+    // } catch (error) {
+    //     const historial = new Historial( payload );
+    //         await historial.save();
+    //         return true;
+    // }
     
     // try {
         // if (existe != []) {
