@@ -21,6 +21,15 @@ const usuarioDesconectado = async ( uid = '' ) => {
     return usuario;
 }
 
+const editar = async ( payload, uid = '' ) => {
+
+    const usuario = await Usuario.findByIdAndUpdate(uid, payload, {new: true, runValidators: true});
+    // usuario.profesor = true;
+
+    await usuario.save();
+    return usuario;
+}
+
 const grabarMensaje = async ( payload ) => {
     /*
         {
@@ -135,6 +144,7 @@ const guardarCursoSocket = async ( payload ) => {
 module.exports = {
     usuarioConectado,
     usuarioDesconectado,
+    editar,
     grabarMensaje,
     grabarHistorial,
     guardarCursoSocket

@@ -30,6 +30,11 @@ io.on('connection', client => {
        io.to( payload.usuario ).emit('historial', payload);
     });
 
+    client.on('editar', (payload) => {
+       editar( payload, uid );
+       io.to( payload.usuario ).emit('historial', payload);
+    });
+
     client.on('guardar', (payload) => {
        guardarCursoSocket(uid, payload);
     //    grabarHistorial( payload );
