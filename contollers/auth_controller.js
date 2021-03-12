@@ -5,6 +5,7 @@ const Curso = require('../models/cursos');
 const Historial = require('../models/historial');
 const { generarJWT } = require('../helpers/jwt');
 const cursos = require('../models/cursos');
+const usuario = require('../models/usuario');
 
 const crearUsuario = async (req, res = response ) => {
 
@@ -99,8 +100,13 @@ const verHistorial = async ( req, res = response ) => {
     
     try {
 
+        // const usuario = await Usuario.findById(uid);
+
         const historial = await Historial.find({ usuario: uid })
-            .sort('-updatedAt');
+            .sort('-updatedAt')
+            .populate('curso');
+
+            // const cursos = historial.
         // const existeEmail = await Usuario.findOne({ email });
         // if( existeHistorial ) {
 
@@ -112,6 +118,7 @@ const verHistorial = async ( req, res = response ) => {
     
         res.json({
             historial,
+            // usuario
         });
         
     } catch (error) {
