@@ -88,6 +88,40 @@ const login = async ( req, res = response ) => {
     
 }
 
+const verHistorial = async ( req, res = response ) => {
+
+    // let cid = payload.curso;
+    // let payload = req.body;
+    // let historial;
+    // let currentUser;
+
+    
+    try {
+
+        const historial = await Historial.find();
+        // const existeEmail = await Usuario.findOne({ email });
+        // if( existeHistorial ) {
+
+        //     historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
+
+        // } else {
+        //     historial = new Historial( payload );
+        //     await historial.save();        }
+    
+        res.json({
+            historial,
+        });
+        
+    } catch (error) {
+        console.log(error);
+        // res.status(500).json({
+        //     ok: false,
+        //     msg: 'Hable con el administrador'
+        // });
+    }
+    
+}
+
 const editar = async ( req, res = response ) => {
 
     let id = req.params.uid;
@@ -471,6 +505,7 @@ module.exports = {
     renewToken,
     guardarCurso,
     verGuardados,
+    verHistorial,
     eliminarGuardado,
     guardarHistorial,
     // agregarHistorial,

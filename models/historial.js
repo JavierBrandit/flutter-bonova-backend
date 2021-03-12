@@ -9,11 +9,11 @@ const HistorialSchema = Schema({
        ref: 'Curso',
        required: true
     },
-    // usuario: {
-    //    type: Schema.Types.ObjectId,
-    //    ref: 'Usuario',
-    //    required: true
-    // },
+    usuario: {
+       type: Schema.Types.ObjectId,
+       ref: 'Usuario',
+       required: true
+    },
     progreso: {
        type: Number,
     },
