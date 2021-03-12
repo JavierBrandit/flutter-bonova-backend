@@ -90,6 +90,7 @@ const login = async ( req, res = response ) => {
 
 const verHistorial = async ( req, res = response ) => {
 
+    let uid = req.uid;
     // let cid = payload.curso;
     // let payload = req.body;
     // let historial;
@@ -98,7 +99,8 @@ const verHistorial = async ( req, res = response ) => {
     
     try {
 
-        const historial = await Historial.find();
+        const historial = await Historial.find({ usuario: uid })
+            .sort('-updatedAt');
         // const existeEmail = await Usuario.findOne({ email });
         // if( existeHistorial ) {
 
