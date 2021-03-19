@@ -30,27 +30,21 @@ io.on('connection', client => {
        io.to( payload.usuario ).emit('historial', payload);
     });
 
-    client.on('editar', (payload) => {
-       editar( payload, uid );
-       io.to( payload.usuario ).emit('editar', payload);
-    });
+    // client.on('editar', (payload) => {
+    //    editar( payload, uid );
+    //    io.to( payload.usuario ).emit('editar', payload);
+    // });
 
-    client.on('guardar', (payload) => {
-       guardarCursoSocket(uid, payload);
-    //    grabarHistorial( payload );
-       io.to( uid ).emit('guardar', payload);
-    });
+    // client.on('guardar', (payload) => {
+    //    guardarCursoSocket(uid, payload);
+    // //    grabarHistorial( payload );
+    //    io.to( uid ).emit('guardar', payload);
+    // });
     
     client.on('disconnect', () => {
         usuarioDesconectado(uid);
     });
- 
-    // client.on('mensaje', ( payload ) => {
-    //     console.log('Mensaje', payload);
 
-    //     io.emit( 'mensaje', { admin: 'Nuevo mensaje' } );
-
-    // });
 
 
 });
