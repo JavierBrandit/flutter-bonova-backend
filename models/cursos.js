@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const Video = require('../models/videos');
+const Usuario = require('../models/usuario');
 
 const CursoSchema = Schema({
 
@@ -26,7 +27,8 @@ const CursoSchema = Schema({
         type: String,
     },
     profesor: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario'
     },
     // guardado: [{
     //     type: Schema.Types.ObjectId,
