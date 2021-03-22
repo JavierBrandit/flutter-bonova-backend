@@ -9,8 +9,8 @@ const obtenerCursos = async (req, res = response ) => {
 
     const cursos = await Curso
         .find()
-        .populate('profesor')
-        //.sort('-online') //ordenar por online descendentemente
+        // .populate('profesor')
+        .sort({ createdAt: 'desc'})
         .skip(desde)
         .limit(30)
     
@@ -51,6 +51,7 @@ const getMatematica = async (req, res = response ) => {
     const cursos = await Curso.find({
         $or: [{ ramo: ramo, nivel: nivel }]
     })
+    // .populate('profesor')
     .sort({ createdAt: 'desc'})
     .limit(30);
 
