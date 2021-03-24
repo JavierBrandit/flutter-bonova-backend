@@ -1,23 +1,69 @@
 const { response } = require('express');
 const Curso = require('../models/cursos');
+const Usuario = require('../models/usuario');
+const Historial = require('../models/historial');
 
 
 const obtenerCursos = async (req, res = response ) => {
 
+    const uid = req.uid;
+
+    // const usuario = await Usuario.findById( uid ).populate('historial');
+    var hh = await Historial.find( { usuario: uid } )
+                                     .populate('curso');
+    // const historiala = historial[0].curso;
+    var element = []
+
+    function name(historial) {
+        
+        for (var i in historial) {
+           if (Object.hasOwnProperty.call(historial, i)) {
+               element.push(historial[i].curso);
+               i+=1;   
+           }
+       }
+       return element;
+    }
+    
+    const lista = name(hh);
     
     const desde = Number( req.query.desde ) || 0; 
-
+    
     const cursos = await Curso
-        .find()
+        .find( { _id: { $nin: lista } })
         // .populate('profesor')
         .sort({ createdAt: 'desc'})
         .skip(desde)
-        .limit(30)
+        .limit(30);
+    
+    
+    function nameH(curso) {
+        
+        for (var i in curso) {
+           if (Object.hasOwnProperty.call(curso, i)) {
+
+               hh.push({
+                   curso: curso[i],
+                   usuario: uid
+               });
+               i+=1;   
+           }
+       }
+       return hh;
+    }
+
+    const historial = nameH(cursos);
     
     
     res.json({
-        ok:true,
-        cursos
+        // ok: true,
+        // cursos,
+        // lista,
+        // historial,
+        historial
+        // historial,
+        // historiala,
+        // lista
 
     })
 }
