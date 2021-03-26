@@ -105,7 +105,11 @@ const verHistorial = async ( req, res = response ) => {
         
         const historial = await Historial.find({ usuario: uid })
             .sort('-updatedAt')
-            .populate('curso')
+            .populate({
+                path: 'curso',
+                populate: { path: 'profesor' }
+              });
+            // .populate('curso')
 
             // const cursos = historial.
         // const existeEmail = await Usuario.findOne({ email });
