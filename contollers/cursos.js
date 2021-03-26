@@ -10,7 +10,11 @@ const obtenerCursos = async (req, res = response ) => {
 
     // const usuario = await Usuario.findById( uid ).populate('historial');
     var hh = await Historial.find( { usuario: uid } )
-                                     .populate('curso');
+                                    //  .populate('curso');
+                                     .populate({
+                                        path: 'curso',
+                                        populate: { path: 'profesor' }
+                                      });
     // const historiala = historial[0].curso;
     var element = []
 
@@ -31,7 +35,7 @@ const obtenerCursos = async (req, res = response ) => {
     
     const cursos = await Curso
         .find( { _id: { $nin: lista } })
-        // .populate('profesor')
+        .populate('profesor')
         .sort({ createdAt: 'desc'})
         .skip(desde)
         .limit(30);
@@ -94,16 +98,71 @@ const getMatematica = async (req, res = response ) => {
     const ramo = req.params.ramo;
     const nivel = req.params.nivel;
 
-    const cursos = await Curso.find({
-        $or: [{ ramo: ramo, nivel: nivel }]
-    })
-    // .populate('profesor')
-    .sort({ createdAt: 'desc'})
-    .limit(30);
+    const uid = req.uid;
 
+    // const usuario = await Usuario.findById( uid ).populate('historial');
+    var hh = await Historial.find( { usuario: uid } )
+                                     .populate('curso');
+    // const historiala = historial[0].curso;
+    var element = []
+
+    function name(historial) {
+        
+        for (var i in historial) {
+           if (Object.hasOwnProperty.call(historial, i)) {
+                
+               element.push(historial[i].curso)
+               i+=1;   
+           }
+       }
+       return element;
+    }
+    
+    const lista = name(hh);
+    
+    const desde = Number( req.query.desde ) || 0; 
+    
+    const cursos = await Curso
+        .find({
+            $or: [{ ramo: ramo, nivel: nivel }],
+            _id: { $nin: lista } 
+        })
+        // .populate('profesor')
+        .sort({ createdAt: 'desc'})
+        .skip(desde)
+        .limit(30);
+    
+    
+    function nameH(curso) {
+        
+        for (var i in curso) {
+           if (Object.hasOwnProperty.call(curso, i)) {
+
+               hh.push({
+                   curso: curso[i],
+                   usuario: uid
+               });
+               i+=1;   
+           }
+       }
+       return hh;
+    }
+
+    const historial = nameH(cursos);
+
+    const p =
+    
+    
     res.json({
-        ok: true,
-        cursos
+        // ok: true,
+        cursos,
+        // lista,
+        // historial,
+        historial
+        // historial,
+        // historiala,
+        // lista
+
     })
 }
 
