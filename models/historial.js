@@ -39,6 +39,8 @@ const HistorialSchema = Schema({
 }
 );
 
+HistorialSchema.index({ curso: 'text' });
+
 HistorialSchema.method('toJSON', function() {
     const { __v, _id, ...object } = this.toObject();
     return object;

@@ -478,11 +478,14 @@ const renewToken = async ( req, res = response ) => {
 
 const searchCursos = async ( req, res = response ) => {
 
-    // const uid = req.uid;
+    const uid = req.uid;
     let query = req.query.t;
     let cursos;
+    var element = [];
+    var final = [];
 
-   
+    
+    
     cursos = await Curso.find({
         $text: {
             $search: query
@@ -490,9 +493,88 @@ const searchCursos = async ( req, res = response ) => {
         {
             score: { $meta: 'textScore' }
         }
-    ).sort({
-        score: { $meta: 'textScore'}
-    });
+        )
+        // .populate({
+        //     path: 'profesor',
+        //     // populate: { path: 'profesor' }
+        // })
+        .sort({
+            score: { $meta: 'textScore'}
+        });
+
+        function name(c) {
+        
+            for ( i in c) {
+               if (Object.hasOwnProperty.call(c, i)) {
+                   element.push(c[i]._id);
+                   i+=1;   
+               }
+           }
+           return element;
+        }
+
+        const n = name(cursos);
+        
+        var hh = await Historial.find( { curso: { $in: element }, usuario: uid } )
+                                //  .populate('curso');
+                                .populate({
+                                    path: 'curso',
+                                    populate: { path: 'profesor' }
+                                });
+
+        function histoID(historial) {
+        
+        for (var i in historial) {
+           if (Object.hasOwnProperty.call(historial, i)) {
+               final.push(historial[i].curso);
+               i+=1;   
+           }
+       }
+       return final;
+    }
+
+    const f = histoID(hh);
+
+    const curs = await Curso.find({
+        _id: { $nin: f },
+        $text: {
+            $search: query
+        }},
+        {
+            score: { $meta: 'textScore' }
+        }
+        )
+        // .populate({
+        //     path: 'profesor',
+        //     // populate: { path: 'profesor' }
+        // })
+        .sort({
+            score: { $meta: 'textScore'}
+        });
+
+    function cursosRestantes(curso) {
+        
+        for (var i in curso) {
+           if (Object.hasOwnProperty.call(curso, i)) {
+
+               hh.push({
+                   curso: curso[i],
+                   usuario: uid
+               });
+               i+=1;   
+           }
+       }
+       return hh;
+    }
+
+    const historial = cursosRestantes(curs);
+
+    // const curs = await Curso
+    //     .find( { _id: { $in:  } })
+    //     .populate('profesor')
+    //     .sort({ createdAt: 'desc'})
+    //     // .skip(desde)
+    //     .limit(30);
     
 
     // const cursos = await Curso.find({ titulo: query });
@@ -500,8 +582,15 @@ const searchCursos = async ( req, res = response ) => {
     // const respuesta = cursos.getFilter();
 
     res.json({
-        cursos,
-        query
+        historial,
+        // cursos,
+        // query,
+        // n,
+        // element,
+        // hh,
+        // final,
+        // f,
+        // curs
     });
 
     // function(req, res, next) {
