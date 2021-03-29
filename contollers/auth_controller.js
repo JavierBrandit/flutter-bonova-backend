@@ -494,10 +494,10 @@ const searchCursos = async ( req, res = response ) => {
             score: { $meta: 'textScore' }
         }
         )
-        // .populate({
-        //     path: 'profesor',
-        //     // populate: { path: 'profesor' }
-        // })
+        .populate({
+            path: 'profesor',
+            // populate: { path: 'profesor' }
+        })
         .sort({
             score: { $meta: 'textScore'}
         });
@@ -544,10 +544,10 @@ const searchCursos = async ( req, res = response ) => {
             score: { $meta: 'textScore' }
         }
         )
-        // .populate({
-        //     path: 'profesor',
-        //     // populate: { path: 'profesor' }
-        // })
+        .populate({
+            path: 'profesor',
+            // populate: { path: 'profesor' }
+        })
         .sort({
             score: { $meta: 'textScore'}
         });
