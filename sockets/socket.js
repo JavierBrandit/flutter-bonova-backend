@@ -1,6 +1,7 @@
 const { io } = require('../index');
 const { comprobarJWT } = require('../helpers/jwt');
 const { usuarioConectado, usuarioDesconectado, grabarMensaje, grabarHistorial, guardarCursoSocket } = require('../contollers/socket');
+const { verHistorial } = require('../contollers/auth_controller');
 
 
 // Mensajes de Sockets
@@ -27,7 +28,7 @@ io.on('connection', client => {
     // Escuchar del cliente el historial
     client.on('historial', (payload) => {
        grabarHistorial( payload, uid );
-       io.to( payload.usuario ).emit('historial', payload);
+       io.to( payload.usuario ).emit(verHistorial(), payload);
     });
 
     // client.on('editar', (payload) => {
