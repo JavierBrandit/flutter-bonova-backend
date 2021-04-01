@@ -103,6 +103,8 @@ const getHistorial = async ( uid = '' ) => {
                 path: 'curso',
                 populate: { path: 'profesor' }
               });
+
+        return historial;
         
     } catch (error) {
         console.log(error);
