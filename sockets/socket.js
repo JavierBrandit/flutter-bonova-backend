@@ -28,7 +28,7 @@ io.on('connection', client => {
     // Escuchar del cliente el historial
     client.on('historial', (payload) => {
        grabarHistorial( payload, uid );
-       io.to( payload.usuario ).emit(verHistorial(), payload);
+       io.to( payload.usuario ).emit('historial', verHistorial() );
     });
 
     // client.on('editar', (payload) => {
