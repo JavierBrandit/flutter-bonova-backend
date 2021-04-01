@@ -30,7 +30,7 @@ io.on('connection', client => {
     // Escuchar del cliente el historial
     client.on('historial', (payload) => {
        grabarHistorial( payload, uid );
-       const h = await verHistorial();
+       var h = verHistorial();
        io.to( payload.usuario ).emit('historial', h );
     });
 
