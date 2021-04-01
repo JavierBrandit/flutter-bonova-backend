@@ -55,20 +55,8 @@ const grabarHistorial = async ( payload, uid = '' ) => {
         progreso: 0.2,
     }
     */    
-//    try {
-//     //    const uid = req.uid;
-//        const historial = new Historial( payload );
-//        await historial.save();
-       
-//        return true;
-//     } catch (error) {
-//        return false; 
-//     }
-    let cid = payload.curso;
-    // let payload = req.body;
-    // let historial;
-    // let currentUser;
 
+    let cid = payload.curso;
     
     try {
 
@@ -78,20 +66,24 @@ const grabarHistorial = async ( payload, uid = '' ) => {
 
             historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
 
+            const historiales = await Historial.find({ usuario: uid });
+
+            return historiales;
+            
+            
         } else {
             historial = new Historial( payload );
             await historial.save();        }
-    
+            
+            const historiales = await Historial.find({ usuario: uid });
+            return historiales;
+            
         // res.json({
         //     historial,
         // });
         
     } catch (error) {
         console.log(error);
-        // res.status(500).json({
-        //     ok: false,
-        //     msg: 'Hable con el administrador'
-        // });
     }
 }
 
