@@ -31,7 +31,7 @@ io.on('connection', client => {
     client.on('historial', (payload) => {
        grabarHistorial( payload, uid );
        
-       io.to( payload.usuario ).emit('ver-historial', getHistorial( uid ) );
+       io.to( payload.usuario ).emit('ver-historial', grabarHistorial( payload, uid ) );
     });
 
     // client.on('editar', (payload) => {
