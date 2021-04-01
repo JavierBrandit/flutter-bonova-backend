@@ -87,6 +87,46 @@ const grabarHistorial = async ( payload, uid = '' ) => {
     }
 }
 
+const getHistorial = async ( uid = '' ) => {
+    /*
+    {
+        curso: '',
+        progreso: 0.2,
+    }
+    */    
+
+    let cid = payload.curso;
+    
+    try {
+        
+        const historiales = await Historial.find({ usuario: uid });
+        return historiales;
+
+
+        // const existeHistorial = await Historial.findOne({ curso: cid });
+        // // const existeEmail = await Usuario.findOne({ email });
+        // if( existeHistorial ) {
+
+        //     historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
+
+            
+            
+        // } else {
+        //     historial = new Historial( payload );
+        //     await historial.save();        }
+            
+        //     const historiales = await Historial.find({ usuario: uid });
+        //     return historiales;
+
+        // res.json({
+        //     historial,
+        // });
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const guardarCursoSocket = async ( payload ) => {
     /*
         {
@@ -139,5 +179,6 @@ module.exports = {
     editar,
     grabarMensaje,
     grabarHistorial,
-    guardarCursoSocket
+    guardarCursoSocket,
+    getHistorial
 }
