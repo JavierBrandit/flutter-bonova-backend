@@ -15,6 +15,8 @@ io.on('connection', client => {
     // Cliente conectado
     usuarioConectado( uid );
 
+    client.emit(  );
+
     // Ingresar al usuario a una sala en particular
     // sala global, clien.id, 5fada84f6b7aa944aefe4a40
     client.join( uid );
@@ -28,7 +30,8 @@ io.on('connection', client => {
     // Escuchar del cliente el historial
     client.on('historial', (payload) => {
        grabarHistorial( payload, uid );
-       io.to( payload.usuario ).emit('historial', verHistorial() );
+       const h = await verHistorial();
+       io.to( payload.usuario ).emit('historial', h );
     });
 
     // client.on('editar', (payload) => {
