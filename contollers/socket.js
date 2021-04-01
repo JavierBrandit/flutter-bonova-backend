@@ -94,33 +94,15 @@ const getHistorial = async ( uid = '' ) => {
         progreso: 0.2,
     }
     */    
-
-    let cid = payload.curso;
     
     try {
         
-        const historiales = await Historial.find({ usuario: uid });
-        return historiales;
-
-
-        // const existeHistorial = await Historial.findOne({ curso: cid });
-        // // const existeEmail = await Usuario.findOne({ email });
-        // if( existeHistorial ) {
-
-        //     historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
-
-            
-            
-        // } else {
-        //     historial = new Historial( payload );
-        //     await historial.save();        }
-            
-        //     const historiales = await Historial.find({ usuario: uid });
-        //     return historiales;
-
-        // res.json({
-        //     historial,
-        // });
+        const historial = await Historial.find({ usuario: uid })
+            .sort('-updatedAt')
+            .populate({
+                path: 'curso',
+                populate: { path: 'profesor' }
+              });
         
     } catch (error) {
         console.log(error);
