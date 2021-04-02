@@ -28,11 +28,12 @@ io.on('connection', client => {
     });
 
     // Escuchar del cliente el historial
-    client.on('historial', (payload) => {
+    client.on('historial', async (payload) => {
        grabarHistorial( payload, uid );
+       const h = await getHistorial(uid);
     //    const h = getHistorial( uid );
        
-       io.to( payload.usuario ).emit('ver-historial', () => { getHistorial( uid ); } );
+       io.to( payload.usuario ).emit('ver-historial', h  );
     });
 
     // client.on('editar', (payload) => {
