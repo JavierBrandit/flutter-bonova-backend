@@ -15,12 +15,12 @@ io.on('connection', client => {
     // Cliente conectado
     usuarioConectado( uid );
 
-    client.emit( 'ver-historial', getHistorial(uid) );
-
+    
     // Ingresar al usuario a una sala en particular
     // sala global, clien.id, 5fada84f6b7aa944aefe4a40
     client.join( uid );
-
+    client.emit( 'ver-historial', getHistorial(uid) );
+    
     // Escuchar del cliente el mensaje-personal
     client.on('mensaje-personal', (payload) => {
        grabarMensaje( payload );
@@ -32,7 +32,7 @@ io.on('connection', client => {
        grabarHistorial( payload, uid );
     //    const h = getHistorial( uid );
        
-       io.to( payload.usuario ).emit('ver-historial', getHistorial( uid ) );
+       io.to( payload.usuario ).emit('ver-historial', () => { getHistorial( uid ); } );
     });
 
     // client.on('editar', (payload) => {
