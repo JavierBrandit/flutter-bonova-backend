@@ -19,7 +19,7 @@ io.on('connection', client => {
     // Ingresar al usuario a una sala en particular
     // sala global, clien.id, 5fada84f6b7aa944aefe4a40
     client.join( uid );
-    client.emit( 'ver-historial', getHistorial(uid) );
+    // client.emit( 'ver-historial', getHistorial(uid) );
     
     // Escuchar del cliente el mensaje-personal
     client.on('mensaje-personal', (payload) => {
@@ -31,8 +31,6 @@ io.on('connection', client => {
     client.on('historial', async (payload) => {
        grabarHistorial( payload, uid );
        const h = await getHistorial(uid);
-    //    const h = getHistorial( uid );
-       
        io.to( payload.usuario ).emit('ver-historial', h  );
     });
 
