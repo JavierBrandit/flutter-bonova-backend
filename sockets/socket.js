@@ -1,6 +1,6 @@
 const { io } = require('../index');
 const { comprobarJWT } = require('../helpers/jwt');
-const { getHistorial, usuarioConectado, usuarioDesconectado, grabarMensaje, grabarHistorial, guardarCursoSocket } = require('../contollers/socket');
+const { getHistorial, usuarioConectado, usuarioDesconectado, grabarMensaje, grabarHistorial, guardarCursoSocket, obtenerCursos } = require('../contollers/socket');
 const { verHistorial } = require('../contollers/auth_controller');
 
 
