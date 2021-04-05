@@ -37,6 +37,11 @@ io.on('connection', client => {
        io.to( payload.usuario ).emit('ver-cursos',    c  );
     });
 
+    client.on('historial', async (payload) => {
+       const c = await obtenerCursos(uid);
+       io.to( payload.usuario ).emit('ver-cursos',    c  );
+    });
+
     // client.on('editar', (payload) => {
     //    editar( payload, uid );
     //    io.to( payload.usuario ).emit('editar', payload);
