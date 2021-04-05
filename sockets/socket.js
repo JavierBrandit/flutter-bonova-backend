@@ -31,16 +31,16 @@ io.on('connection', client => {
     client.on('historial', async (payload) => {
        grabarHistorial( payload, uid );
        const h = await getHistorial(uid);
-    //    const c = await obtenerCursos(uid);
+       const c = await obtenerCursos(uid);
 
        io.to( payload.usuario ).emit('ver-historial', h  );
-    //    io.to( payload.usuario ).emit('ver-cursos',    c  );
-    });
-
-    client.on('historial', async (payload) => {
-       const c = await obtenerCursos(uid);
        io.to( payload.usuario ).emit('ver-cursos',    c  );
     });
+
+    // client.on('historial', async (payload) => {
+    //    const c = await obtenerCursos(uid);
+    //    io.to( payload.usuario ).emit('ver-cursos',    c  );
+    // });
 
     // client.on('editar', (payload) => {
     //    editar( payload, uid );
