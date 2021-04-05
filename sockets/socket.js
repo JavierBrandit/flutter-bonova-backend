@@ -30,11 +30,11 @@ io.on('connection', client => {
     // Escuchar del cliente el historial
     client.on('historial', async (payload) => {
        grabarHistorial( payload, uid );
-    //    const h = await getHistorial(uid);
-       const c = await obtenerCursos(uid);
-    //    io.to( payload.usuario ).emit('ver-historial', h  );
+       const h = await getHistorial(uid);
+    //    const c = await obtenerCursos(uid);
+       io.to( payload.usuario ).emit('ver-historial', h  );
 
-       io.to( payload.usuario ).emit('ver-cursos',    c  );
+    //    io.to( payload.usuario ).emit('ver-cursos',    c  );
     });
 
     // client.on('historial', async (payload) => {
