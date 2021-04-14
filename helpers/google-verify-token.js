@@ -12,8 +12,7 @@ const validarGoogleIdToken = async ( token ) => {
             idToken: token,
             audience: [
                 CLIENT_ID,
-                '372165893061-lpvt6d5mc2dqhmkjb32p1r0r1hd18kr9.apps.googleusercontent.com',
-                '372165893061-o9sr3nipc4voct9cbrvsrjt346nufc8c.apps.googleusercontent.com'
+                '1034710890619-u6849tchecqqvpesq7o51n18krs27lpi.apps.googleusercontent.com'
             ],  
         });
         const payload = ticket.getPayload();
