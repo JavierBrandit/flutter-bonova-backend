@@ -1,7 +1,7 @@
 
 const { OAuth2Client } = require('google-auth-library');
 
-const CLIENT_ID = '1034710890619-n7qk14gf0s1qd3kub21rpvtgmb5tu7qr.apps.googleusercontent.com';
+const CLIENT_ID = '1034710890619-u6849tchecqqvpesq7o51n18krs27lpi.apps.googleusercontent.com';
 
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -12,7 +12,8 @@ const validarGoogleIdToken = async ( token ) => {
             idToken: token,
             audience: [
                 CLIENT_ID,
-                '1034710890619-u6849tchecqqvpesq7o51n18krs27lpi.apps.googleusercontent.com'
+                '1034710890619-n7qk14gf0s1qd3kub21rpvtgmb5tu7qr.apps.googleusercontent.com'
+
             ],  
         });
         const payload = ticket.getPayload();
@@ -26,6 +27,7 @@ const validarGoogleIdToken = async ( token ) => {
             email: payload['email'],
         }
     } catch (error) {
+        console.log(error);
         return null;
     }
 
