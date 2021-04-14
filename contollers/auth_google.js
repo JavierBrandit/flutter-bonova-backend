@@ -6,8 +6,10 @@ const { validarGoogleIdToken } = require('../helpers/google-verify-token');
 const googleAuth = async ( req, res = response ) => {
 
     const token = req.body.token;
+    
+    console.log('============ token ============= ');
     console.log(token);
-    if( !token ) {
+    if( token === null ) {
         return res.json({
             ok: false,
             msg: 'No hay token en la petición'
@@ -15,9 +17,12 @@ const googleAuth = async ( req, res = response ) => {
     }
     
     const googleUser = await validarGoogleIdToken( token );
+    console.log('============ google user ============= ');
     console.log(googleUser);
+    console.log('============ req.body ============= ');
+    console.log(req.body);
     
-    if ( !googleUser ) {
+    if ( googleUser === null ) {
         return res.status(400).json({
             ok: false
         });
