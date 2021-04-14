@@ -14,7 +14,7 @@ const googleAuth = async ( req, res = response ) => {
 
     const googleUser = await validarGoogleIdToken( token );
 
-    if ( !googleUser ) {
+    if ( googleUser === null ) {
         return res.status(400).json({
             ok: false
         });
