@@ -111,6 +111,63 @@ const getHistorial = async ( uid = '' ) => {
     }
 }
 
+const obtenerCursos = async ( uid = '' ) => {
+
+
+    // const usuario = await Usuario.findById( uid ).populate('historial');
+    var hh = await Historial.find( { usuario: uid } )
+                                    //  .populate('curso');
+                                     .populate({
+                                        path: 'curso',
+                                        populate: { path: 'profesor' }
+                                      });
+    // const historiala = historial[0].curso;
+    var element = []
+
+    function name(historial) {
+        
+        for (var i in historial) {
+           if (Object.hasOwnProperty.call(historial, i)) {
+               element.push(historial[i].curso);
+               i+=1;   
+           }
+       }
+       return element;
+    }
+    
+    const lista = name(hh);
+    
+    const desde = Number( req.query.desde ) || 0; 
+    
+    const cursos = await Curso
+        .find( { _id: { $nin: lista } })
+        .populate('profesor')
+        .sort({ createdAt: 'desc'})
+        .skip(desde)
+        .limit(30);
+    
+    
+    function nameH(curso) {
+        
+        for (var i in curso) {
+           if (Object.hasOwnProperty.call(curso, i)) {
+
+               hh.push({
+                   curso: curso[i],
+                   usuario: uid
+               });
+               i+=1;   
+           }
+       }
+       return hh;
+    }
+
+    const historial = nameH(cursos);
+    
+    return historial;
+
+}
+
 const guardarCursoSocket = async ( payload ) => {
     /*
         {
@@ -164,5 +221,6 @@ module.exports = {
     grabarMensaje,
     grabarHistorial,
     guardarCursoSocket,
-    getHistorial
+    getHistorial,
+    obtenerCursos
 }
