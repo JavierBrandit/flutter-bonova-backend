@@ -1,4 +1,5 @@
 const { response } = require('express');
+const bcrypt = require('bcryptjs');
 const { validarGoogleIdToken } = require('../helpers/google-verify-token');
 
 
@@ -19,6 +20,14 @@ const googleAuth = async ( req, res = response ) => {
             ok: false
         });
     }
+
+    const usuario = new Usuario( req.body );
+
+    // Encriptar contraseñas
+    const salt = bcrypt.genSaltSync();
+    usuario.password = bcrypt.hashSync( password, salt );
+
+    await usuario.save();
 
     // TODO: Guardar en su base de datos
 
