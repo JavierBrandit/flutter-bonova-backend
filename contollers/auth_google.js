@@ -28,13 +28,13 @@ const googleAuth = async ( req, res = response ) => {
         });
     }
 
-    const usuario = new Usuario( req.body );
+    // const usuario = new Usuario( req.body );
 
-    // Encriptar contraseñas
-    const salt = bcrypt.genSaltSync();
-    usuario.password = bcrypt.hashSync( password, salt );
+    // // Encriptar contraseñas
+    // const salt = bcrypt.genSaltSync();
+    // usuario.password = bcrypt.hashSync( password, salt );
 
-    await usuario.save();
+    // await usuario.save();
 
     // TODO: Guardar en su base de datos
 
