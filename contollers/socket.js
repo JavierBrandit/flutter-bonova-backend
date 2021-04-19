@@ -24,7 +24,6 @@ const usuarioDesconectado = async ( uid = '' ) => {
 const editar = async ( payload, uid = '' ) => {
 
     const usuario = await Usuario.findByIdAndUpdate(uid, payload, {new: true, runValidators: true});
-    // usuario.profesor = true;
 
     await usuario.save();
     return usuario;
@@ -48,6 +47,7 @@ const grabarMensaje = async ( payload ) => {
     }
 }
 
+//AQUI REALMENTE SE GUARDA EL HISTORIAL
 const grabarHistorial = async ( payload, uid = '' ) => {
     /*
     {
@@ -61,7 +61,6 @@ const grabarHistorial = async ( payload, uid = '' ) => {
     try {
 
         const existeHistorial = await Historial.findOne({ curso: cid });
-        // const existeEmail = await Usuario.findOne({ email });
         if( existeHistorial ) {
 
             historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
@@ -77,16 +76,30 @@ const grabarHistorial = async ( payload, uid = '' ) => {
             
             const historiales = await Historial.find({ usuario: uid });
             return historiales;
-            
-        // res.json({
-        //     historial,
-        // });
         
     } catch (error) {
         console.log(error);
     }
 }
 
+//AQUI REALMENTE SE BORRA EL HISTORIAL
+const borrarHistorial = async ( uid = '' ) => {
+
+    let cid = payload.curso;
+    
+    try {
+
+        historial = await Historial.findOneAndDelete({ curso: cid });
+
+        const historiales = await Historial.find({ usuario: uid });
+
+        return historiales;
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+// AQUI REALMENTE SE OBTIENE EL HISTORIAL
 const getHistorial = async ( uid = '' ) => {
     /*
     {
@@ -114,14 +127,11 @@ const getHistorial = async ( uid = '' ) => {
 const obtenerCursos = async ( uid = '' ) => {
 
 
-    // const usuario = await Usuario.findById( uid ).populate('historial');
     var hh = await Historial.find( { usuario: uid } )
-                                    //  .populate('curso');
                                      .populate({
                                         path: 'curso',
                                         populate: { path: 'profesor' }
                                       });
-    // const historiala = historial[0].curso;
     var element = []
 
     function name(historial) {
@@ -168,48 +178,9 @@ const obtenerCursos = async ( uid = '' ) => {
 
 }
 
-const guardarCursoSocket = async ( payload ) => {
-    /*
-        {
-            curso: '',
-            progeso: 0,1,
-        }
-    */ 
-    // const usuario = await Usuario.findById( uid );
-    // const historial = new Historial( payload );
-    // const curso   = await Curso.findById( payload.curso );
+// const guardarCursoSocket = async ( payload ) => {
 
-    // await usuario.push(
-    //     curso 
-    // );
-    // const existe = await Historial.findOneAndUpdate({curso: payload.curso})
-    // const existe = await Historial.find({
-    //     $or: [{ curso: payload.curso, usuario: payload.usuario }]
-    // });
-    // try {
-    //     const existe = await Historial.findOneAndUpdate({
-    //         $or: [{ curso: payload.curso, usuario: payload.usuario }]
-    //     }, payload);
-        
-    // } catch (error) {
-    //     const historial = new Historial( payload );
-    //         await historial.save();
-    //         return true;
-    // }
-    
-    // try {
-        // if (existe != []) {
-        //     const historial = new Historial( payload );
-        //     await historial.save();
-        //     return true;
-        // } else {
-        //     return true;
-        // } 
-           
-        // } catch (error) {
-        //    return false; 
-        // }
-}
+// }
 
 
 
@@ -220,7 +191,8 @@ module.exports = {
     editar,
     grabarMensaje,
     grabarHistorial,
-    guardarCursoSocket,
+    // guardarCursoSocket,
     getHistorial,
-    obtenerCursos
+    obtenerCursos,
+    borrarHistorial
 }
