@@ -32,7 +32,7 @@ io.on('connection', client => {
         io.to( payload.usuario ).emit('ver-historial', h  );
     });
     client.on('borrar-historial', async (payload) => {
-        borrarHistorial(uid);
+        borrarHistorial(payload);
         const h = await getHistorial(uid);
         io.to( payload.usuario ).emit('ver-historial', h  );
     });

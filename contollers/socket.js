@@ -83,9 +83,9 @@ const grabarHistorial = async ( payload, uid = '' ) => {
 }
 
 //AQUI REALMENTE SE BORRA EL HISTORIAL
-const borrarHistorial = async ( uid = '' ) => {
+const borrarHistorial = async ( payload ) => {
 
-    let cid = payload.curso;
+    let cid = payload;
     
     try {
 
