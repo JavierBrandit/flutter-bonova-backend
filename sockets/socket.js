@@ -34,7 +34,7 @@ io.on('connection', client => {
     client.on('borrar-historial', async (payload) => {
         borrarHistorial(payload);
         const h = await getHistorial(uid);
-        io.to( payload.usuario ).emit('ver-historial', h  );
+        io.to( payload.usuario ).emit('borrar-historial', h  );
     });
     
     

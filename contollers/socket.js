@@ -60,7 +60,7 @@ const grabarHistorial = async ( payload, uid = '' ) => {
     
     try {
 
-        const existeHistorial = await Historial.findOne({ curso: cid });
+        const existeHistorial = await Historial.findOne({ curso: cid }, {usuario: uid });
         if( existeHistorial ) {
 
             historial = await Historial.findOneAndUpdate({ curso: cid }, payload, {new: true} );
@@ -83,13 +83,13 @@ const grabarHistorial = async ( payload, uid = '' ) => {
 }
 
 //AQUI REALMENTE SE BORRA EL HISTORIAL
-const borrarHistorial = async ( payload ) => {
+const borrarHistorial = async ( payload, uid = '' ) => {
 
     let cid = payload.curso;
     
     try {
 
-        historial = await Historial.findOneAndDelete({ curso: cid });
+        historial = await Historial.findOneAndDelete({ curso: cid },  {usuario: uid });
 
         const historiales = await Historial.find({ usuario: uid });
 
