@@ -41,7 +41,7 @@ io.on('connection', client => {
     //                       EDITAR USUARIO
     client.on('editar-usuario', async (payload) => {
         const usuario = await editar( payload, uid );
-        io.to( payload.para ).emit('editar-usuario', usuario);
+        io.to( uid ).emit('editar-usuario', usuario);
     });
 
 
